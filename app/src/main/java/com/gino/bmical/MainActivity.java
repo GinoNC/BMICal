@@ -74,13 +74,23 @@ public class MainActivity extends AppCompatActivity {
         tvResult.setText("");
         tvResult.setTextColor(getResources().getColor(R.color.black));
 
-        String wei = etWeight.getText().toString();
-        String hei = etHeight.getText().toString();
+        String wei = etWeight.getText().toString().trim();
+        String hei = etHeight.getText().toString().trim();
         if (wei.isEmpty() || hei.isEmpty()) {
             tvResult.setText("!! Please enter weight and height !!");
             return false;
         }
-        if (Float.parseFloat(wei) <= 0 || Float.parseFloat(hei) <= 0) {
+        
+        float weight, height;
+        try {
+            weight = Float.parseFloat(wei);
+            height = Float.parseFloat(hei);
+        } catch (NumberFormatException e) {
+            tvResult.setText("!! Please enter valid numeric weight and height !!");
+            return false;
+        }
+
+        if (weight <= 0 || height <= 0) {
             tvResult.setText("!! Please enter valid weight and height !!");
             return false;
         }
@@ -90,8 +100,13 @@ public class MainActivity extends AppCompatActivity {
 
     // ===== calculation
     private void calculateBMI() {
-        float weight = Float.parseFloat(etWeight.getText().toString());
-        float height = Float.parseFloat(etHeight.getText().toString());
+        float weight, height;
+        try {
+            weight = Float.parseFloat(etWeight.getText().toString().trim());
+            height = Float.parseFloat(etHeight.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            return;
+        }
 
         float bmi = 0;
         if (rbWeightKG.isChecked()) bmi = weight / (height * height);
