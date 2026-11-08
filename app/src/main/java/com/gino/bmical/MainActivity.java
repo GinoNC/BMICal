@@ -94,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
             tvResult.setText("!! Please enter valid weight and height !!");
             return false;
         }
+        if (height >= 3) {
+            tvResult.setText("!! Please enter a reasonable height !!");
+            return false;
+        }
 
         return true;
     }
